@@ -1,5 +1,6 @@
 # java-playground
-Test and samples in java
+
+Tests, exercises, snippets in java
 
 ## Requirements
 
@@ -7,8 +8,7 @@ A Java JDK version 17 must be installed and available in the PATH.
 
 ## Usage
 
-These are mainly Junit.  
-Execute by running
+Because these are currently all Junits, we can execute by running the following:
 
 ```code
 mvn clean compile test
