@@ -122,6 +122,10 @@ public class SpiralTest {
             return yRange;
         }
 
+        boolean canMove() {
+            return !finalMove();
+        }
+
         boolean finalMove() {
             return xRange.isClosed() || yRange.isClosed();
         }
@@ -175,12 +179,12 @@ public class SpiralTest {
         Position position = new Position(0, 0);
         Direction direction = Direction.values()[0];
         Context context = new Context(position, direction, xRange, yRange);
-        do {
+        while (context.canMove()) {
             int currentValue = array[context.getPosition().getX()][context.getPosition().getY()];
             // System.out.println(currentValue);
             result.add(currentValue);
             context = move(context);
-        } while (!context.finalMove());
+        }
         return result;
     }
 
