@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class SpiralTest {
+
     private static int[][] array = {
             { 1, 2, 3, 4, 5 },
             { 16, 17, 18, 19, 6 },
@@ -181,15 +182,25 @@ public class SpiralTest {
         Context context = new Context(position, direction, xRange, yRange);
         while (context.canMove()) {
             int currentValue = array[context.getPosition().getX()][context.getPosition().getY()];
-            // System.out.println(currentValue);
+            System.out.println(currentValue);
             result.add(currentValue);
             context = move(context);
         }
         return result;
     }
 
+    private boolean areEquals(List<Integer> left, List<Integer> right) {
+        if (left.size() != right.size())
+            return false;
+        for (int i = 0; i < left.size(); ++i) {
+            if (!left.get(i).equals(right.get(i)))
+                return false;
+        }
+        return true;
+    }
+
     @Test
     public void printSpiral() {
-        Assertions.assertArrayEquals(getExpectedResult().toArray(), printSpiral(array).toArray());
+        Assertions.assertTrue(areEquals(getExpectedResult(), printSpiral(array)));
     }
 }
