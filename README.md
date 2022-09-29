@@ -9,7 +9,7 @@ Tests, exercises, snippets in java
 
 ## Usage
 
-Because these are currently all Junits, we can execute by running the following:
+Because this project is currently all made of JUnits, we can execute them by running the following command:
 
 ```code
 mvn clean compile test
