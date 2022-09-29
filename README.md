@@ -2,9 +2,10 @@
 
 Tests, exercises, snippets in java
 
-## Requirements
+## Prerequisites
 
-A Java JDK version 17 must be installed and available in the PATH.
+- A Java JDK version 17 must be installed and available in the PATH.
+- Apache Maven must be installed and available in the PATH.
 
 ## Usage
 
