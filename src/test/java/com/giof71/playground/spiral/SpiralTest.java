@@ -3,9 +3,11 @@ package com.giof71.playground.spiral;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
 
 public class SpiralTest {
 
@@ -45,6 +47,10 @@ public class SpiralTest {
 
         int getDeltaY() {
             return deltaY;
+        }
+
+        Direction next() {
+            return Direction.values()[(this.ordinal() + 1) % Direction.values().length];
         }
     };
 
@@ -165,10 +171,14 @@ public class SpiralTest {
                 highX -= 1;
             }
         }
-        Direction newDirection = Direction.values()[(direction.ordinal() + 1) % Direction.values().length];
+        Direction newDirection = direction.next();
         newX = newDirection.getDeltaX() + position.getX();
         newY = newDirection.getDeltaY() + position.getY();
-        return new Context(new Position(newX, newY), newDirection, new Range(lowX, highX), new Range(lowY, highY));
+        return new Context(
+                new Position(newX, newY),
+                newDirection,
+                new Range(lowX, highX),
+                new Range(lowY, highY));
     }
 
     private static List<Integer> printSpiral(int[][] array) {
@@ -193,5 +203,22 @@ public class SpiralTest {
     @Test
     public void printSpiral() {
         Assertions.assertArrayEquals(getExpectedResult().toArray(), printSpiral(array).toArray());
+    }
+
+    @Test
+    public void notSameAsInput() {
+        Assertions.assertThrows(
+                AssertionFailedError.class,
+                () -> Assertions.assertArrayEquals(array, printSpiral(array).toArray()));
+    }
+
+    @Test
+    public void notReversedOfExpected() {
+        List<Integer> reverse = new ArrayList<>(getExpectedResult());
+        Collections.reverse(reverse);
+        Assertions.assertThrows(
+                AssertionFailedError.class,
+                () -> Assertions.assertArrayEquals(reverse.toArray(),
+                        printSpiral(array).toArray()));
     }
 }
