@@ -52,6 +52,10 @@ public class SpiralTest {
         Direction next() {
             return Direction.values()[(this.ordinal() + 1) % Direction.values().length];
         }
+
+        Position newPosition(Position current) {
+            return new Position(getDeltaX() + current.getX(), getDeltaY() + current.getY());
+        }
     };
 
     static class Position {
@@ -144,14 +148,12 @@ public class SpiralTest {
         Position position = context.getPosition();
         Direction direction = context.getDirection();
 
-        int newX = direction.getDeltaX() + position.getX();
-        int newY = direction.getDeltaY() + position.getY();
-
-        boolean inX = xRange.inRange(newX);
-        boolean inY = yRange.inRange(newY);
+        Position newPosition = direction.newPosition(position);
+        boolean inX = xRange.inRange(newPosition.getX());
+        boolean inY = yRange.inRange(newPosition.getY());
 
         if (inX && inY) {
-            return new Context(new Position(newX, newY), direction, xRange, yRange);
+            return new Context(newPosition, direction, xRange, yRange);
         }
         int lowX = xRange.getLow();
         int highX = xRange.getHigh();
@@ -172,10 +174,9 @@ public class SpiralTest {
             }
         }
         Direction newDirection = direction.next();
-        newX = newDirection.getDeltaX() + position.getX();
-        newY = newDirection.getDeltaY() + position.getY();
+        newPosition = newDirection.newPosition(position);
         return new Context(
-                new Position(newX, newY),
+                newPosition,
                 newDirection,
                 new Range(lowX, highX),
                 new Range(lowY, highY));
